@@ -24,21 +24,32 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('DICT')),
-      body: const Center(
-        child: Column(
-          children: [
-            Text(
-              'Department of Information and Communications Technology',
-            ),
-            Text(
-              'Region IX and BASULTA',
-            ),
-            Text(
-              'Zamboanga City',
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 30, left: 20, right: 10),
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  color: Colors.red,
+                ),
+              ),
+              const Column(
+                children: [
+                  Text(
+                    'Aljon Mutalib',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text('Programmer'),
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
