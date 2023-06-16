@@ -31,24 +31,48 @@ class Home extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 30, left: 20, right: 10),
                 child: Container(
-                  width: 80,
-                  height: 80,
+                  width: 60,
+                  height: 60,
                   color: Colors.red,
                 ),
               ),
               const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Aljon Mutalib',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    'ALJON MUTALIB',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   Text('Programmer'),
                 ],
               )
             ],
           ),
+          const Divider(),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(
+                Icons.person,
+                color: Color(0xFF006600),
+                size: 25,
+              ),
+              Text('Personal Data'),
+              Icon(Icons.arrow_forward)
+            ],
+          ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(
+                Icons.settings,
+                color: Color(0xFF006600),
+                size: 25,
+              ),
+              Text('Settings'),
+              Icon(Icons.arrow_forward)
+            ],
+          )
         ],
       ),
     );
