@@ -1,42 +1,26 @@
-function login(){
-    var username = $('#usernameForm');
-    var password = $('#passwordForm');
+<?php
+session_start(); //Start Session
+require_once 'connect.php'; //include connection string
 
-    var login_result = $('#login_result');
-    login_result.html('<div class="alert alert-success">Loading... Please wait. <i class="fa fa-spinner fa-spin" style="font-size:24px"></i></div>');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check method = POST
+    $username = $_POST['username']; //data from function.js username
+    $password = $_POST['password']; //data from function.js password
 
-    if (username.val() == '') {
-        username.focus();
-        login_result.html('<div class="alert alert-info">Please Enter the Username!!</div>');
-        return false;
-    }else if (password.val() == '') {
-        password.focus();
-        login_result.html('<div class="alert alert-info">Please Enter the Password!!</div>');
-        return false;
-    }else if (username.val() != '' && password.val() != '') {
-        var UrlToPass = "action=login&username=" + username.val() + "&password=" + password.val();
-        $.ajax({
-            type: 'POST',
-            data: UrlToPass,
-            url: 'config/checker.php',
-            success: function (returnval) {
-                switch (returnval) {
-                    case '0':
-                        login_result.html('<div class="alert alert-danger">Please Check Your Username and Password!!</div>');
-                        break;
-                    case '1':
-                        login_result.html('<div class="alert alert-success">Welcome!</div>');
-                        //window.location.href = 'pages/dashboard.php';
-                        break;
-                    default:
-                        console.log('Problem with sql query: ' + returnval);
-                        break;
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log('AJAX Error: ' + errorThrown);
-            }
-        });
+    $stmt = $conn->prepare("SELECT ID,username,password,name FROM user_tbl WHERE username = :username"); //mysql Query
+    $stmt->bindParam(':username', $username); //binding the parameters
+    $stmt->execute(); //execute the mysql query
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC); //stored data from database to variable $result
+
+    if ($result && password_verify($password, $result['password'])) { //verify if input password and password from database are the same
+        unset($result['password']); //unset password
+        $_SESSION['ID']     = $result['ID']; //save session ID
+        $_SESSION['username']   = $result['username']; //save session username
+        $_SESSION['name']      = $result['name']; //save session name
+        echo 1; //return case success = 1
+    } else {
+        echo 0; //return case failed = 0
     }
-    return false;
 }
+
+?>
